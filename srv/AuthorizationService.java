@@ -29,6 +29,7 @@ public class AuthorizationService extends BaseService {
     }
 
     public boolean isSalesManager(Request req) {
+    	System.out.println("Accessing isSalesManager for user: " + req.getUser().getId());
         return req.getUser().is(SALES_MANAGER);
     }
 
