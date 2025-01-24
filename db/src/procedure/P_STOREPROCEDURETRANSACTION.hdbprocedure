@@ -1,0 +1,36 @@
+PROCEDURE "P_STOREPROCEDURETRANSACTION" ()
+    LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER
+AS
+BEGIN
+    -- Declare necessary variables
+    DECLARE lv_product_id NVARCHAR(36);
+    DECLARE lv_customer_id NVARCHAR(36);
+    DECLARE lv_order_id NVARCHAR(36);
+
+    -- Attempt to insert into the Products table
+    INSERT INTO "ECOMMERCE_CAP_PRODUCTS" (ID, NAME, DESCRIPTION, PRICE, STOCK, CREATEDAT, CREATEDBY)
+    VALUES (
+        'f27b53d1-72d8-4c94-b842-b56ffb20d0c4', 
+        'Sample Product', 
+        'Description of the sample product', 
+        100.00, 
+        50, 
+        CURRENT_TIMESTAMP, 
+        'ANONYMOUS'
+    );
+
+    -- Attempt to insert into the Orders table
+    INSERT INTO "ECOMMERCE_CAP_ORDERS" (ID, CUSTOMER_ID, PRODUCT_ID, QUANTITY, ORDER_DATE, CREATEDAT, CREATEDBY)
+    VALUES (
+        'db9a2e77-0dfb-46a8-bf41-f69ad1e3f999', 
+        'b7d18d1e-3cc3-478b-8b7c-67681b7e2f9f', 
+        'f27b53d1-72d8-4c94-b842-b56ffb20d0c4', 
+        1, 
+        CURRENT_TIMESTAMP, 
+        CURRENT_TIMESTAMP, 
+        'ANONYMOUS'
+    );
+
+    -- End of procedure
+END;

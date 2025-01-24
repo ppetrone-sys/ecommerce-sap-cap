@@ -1,0 +1,18 @@
+GET http://localhost:4004/odata/v4/MarketplaceService/Products
+Authorization: Basic ZWNvbW1lcmNlLkFkbWluOnBhc3N3b3Jk
+
+###
+POST http://localhost:4004/odata/v4/MarketplaceService/Products
+Authorization: Basic ZWNvbW1lcmNlLkFkbWluOnBhc3N3b3Jk
+Content-Type: application/json
+Body:
+{
+  "name": "Nuovo Prodotto",
+  "description": "Descrizione",
+  "price": 100.00,
+  "stock": 50
+}
+
+###
+GET http://localhost:4004/odata/v4/MarketplaceService/Orders
+Authorization: Basic ZWNvbW1lcmNlLkFkbWluOnBhc3N3b3Jk

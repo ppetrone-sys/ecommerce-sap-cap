@@ -1,0 +1,92 @@
+{
+  "xsappname": "ecommerce_cap",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Admin",
+      "description": "Full access to all entities (Customers, Products, Orders)"
+    },
+    {
+      "name": "$XSAPPNAME.InventoryManager",
+      "description": "Full access to the Products entity"
+    },
+    {
+      "name": "$XSAPPNAME.SalesManager",
+      "description": "Full access to the Orders entity"
+    },
+    {
+      "name": "$XSAPPNAME.StoreSupervisor",
+      "description": "Full access to both Orders and Products entities"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "ecommerce_cap.Admin_rt",
+      "default-role-name": "Admin",
+      "description": "Administrator with full access to all entities",
+      "scope-references": [
+        "$XSAPPNAME.Admin"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "ecommerce_cap.InventoryManager_rt",
+      "default-role-name": "InventoryManager",
+      "description": "Manages inventory with full access to Products",
+      "scope-references": [
+        "$XSAPPNAME.InventoryManager"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "ecommerce_cap.SalesManager_rt",
+      "default-role-name": "SalesManager",
+      "description": "Manages sales with full access to Orders",
+      "scope-references": [
+        "$XSAPPNAME.SalesManager"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "ecommerce_cap.StoreSupervisor_rt",
+      "default-role-name": "StoreSupervisor",
+      "description": "Oversees both Orders and Products",
+      "scope-references": [
+        "$XSAPPNAME.StoreSupervisor"
+      ],
+      "attribute-references": []
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "ecommerce_cap.Admin_rc",
+      "description": "Role collection for Administrators",
+      "role-template-references": [
+        "$XSAPPNAME.ecommerce_cap.Admin_rt"
+      ]
+    },
+    {
+      "name": "ecommerce_cap.InventoryManager_rc",
+      "description": "Role collection for Inventory Managers",
+      "role-template-references": [
+        "$XSAPPNAME.ecommerce_cap.InventoryManager_rt"
+      ]
+    },
+    {
+      "name": "ecommerce_cap.SalesManager_rc",
+      "description": "Role collection for Sales Managers",
+      "role-template-references": [
+        "$XSAPPNAME.ecommerce_cap.SalesManager_rt"
+      ]
+    },
+    {
+      "name": "ecommerce_cap.StoreSupervisor_rc",
+      "description": "Role collection for Store Supervisors",
+      "role-template-references": [
+        "$XSAPPNAME.ecommerce_cap.StoreSupervisor_rt"
+      ]
+    }
+  ],
+  "authorities-inheritance": false
+}

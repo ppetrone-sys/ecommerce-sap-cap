@@ -1,0 +1,14 @@
+GET http://localhost:4004/odata/v4/MarketplaceService/Orders
+Authorization: Basic ZWNvbW1lcmNlLlNhbGVzTWFuYWdlcjpwYXNzd29yZA==
+
+###
+POST http://localhost:4004/odata/v4/MarketplaceService/Orders
+Authorization: Basic ZWNvbW1lcmNlLlNhbGVzTWFuYWdlcjpwYXNzd29yZA==
+Content-Type: application/json
+Body:
+{
+  "customer_ID": "customer-id",
+  "product_ID": "product-id",
+  "quantity": 2,
+  "order_date": "2025-01-20T10:00:00Z"
+}

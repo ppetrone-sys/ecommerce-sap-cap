@@ -1,0 +1,4 @@
+ID,name,email,address,phone,createdAt,createdBy,modifiedAt,modifiedBy
+f47ac10b-58cc-4372-a567-0e02b2c3d479,John Doe,john.doe@example.com,123 Elm Street,555-1234,2025-01-20T10:00:00Z,admin,2025-01-20T12:00:00Z,admin
+c9bf9e57-1685-4c89-a6f2-6d1b9f3940b5,Jane Smith,jane.smith@example.com,456 Oak Avenue,555-5678,2025-01-20T10:05:00Z,admin,2025-01-20T12:05:00Z,admin
+b7d18d1e-3cc3-478b-8b7c-67681b7e2f9f,Bob Johnson,bob.johnson@example.com,789 Pine Road,555-9101,2025-01-20T10:10:00Z,admin,2025-01-20T12:10:00Z,admin

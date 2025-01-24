@@ -1,0 +1,82 @@
+{
+  "name": "ecommerce-cap",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap-cloud-sdk/connectivity": "^3.16.0",
+    "@sap-cloud-sdk/http-client": "^3.15.0",
+    "@cap-js/hana": "^1",
+    "@sap/cds": "^8",
+    "@sap/cds-common-content": "^2.1.0",
+    "@sap/xsenv": "^5.4.0",
+    "@sap/xssec": "^4",
+    "express": "^4",
+    "perfect-express-sanitizer": "^2.0.2",
+    "sap-cf-axios": "^1.0.2"
+  },
+  "devDependencies": {
+    "@cap-js/cds-types": "^0.8.0",
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^8",
+    "jest": "^29.7.0",
+    "rimraf": "^5.0.5"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --delete-services --retries 1",
+    "undeploy": "cf undeploy ecommerce-cap --delete-services --delete-service-keys --delete-service-brokers",
+    "publish": "npm run build && npm run deploy",
+    "test": "jest"
+  },
+  "cds": {
+    "requires": {
+      "auth": {
+        "kind": "basic",
+        "users": {
+          "ecommerce.Admin": {
+            "password": "password",
+            "roles": [
+              "Admin"
+            ]
+          },
+          "ecommerce.InventoryManager": {
+            "password": "password",
+            "roles": [
+              "InventoryManager"
+            ]
+          },
+          "ecommerce.SalesManager": {
+            "password": "password",
+            "roles": [
+              "SalesManager"
+            ]
+          },
+          "ecommerce.StoreSupervisor": {
+            "password": "password",
+            "roles": [
+              "StoreSupervisor"
+            ]
+          }
+        }
+      },
+      "[hybrid]": {
+        "auth": "basic",
+        "db": "hana"
+      },
+      "[production]": {
+        "auth": "xsuaa",
+        "db": "hana"
+      },
+      "connectivity": true,
+      "destinations": true,
+      "application-logging": true
+    },
+    "sql": {
+      "native_hana_associations": false
+    }
+  }
+}

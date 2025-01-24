@@ -1,0 +1,82 @@
+_schema-version: 3.3.0
+ID: ecommerce-cap
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+  - name: ecommerce-cap-srv
+    type: nodejs
+    path: gen/srv
+    properties:
+      ALLOWED_KEYS: 'insert;update;delete'
+      SQL_SEVERITY: 3
+      NOSQL_SEVERITY: 3
+      COOKIES:
+        SameSite: Lax 
+      httpHeaders: "[
+        { \"Clear-Site-Data\": \"\\\"cache\\\", \\\"cookies\\\", \\\"storage\\\"\" }, 
+        { \"Cross-Origin-Embedded-Policy\": \"require-corp\"},
+        { \"Cross-Origin-Opener-Policy\": \"same-origin\"},
+        { \"Cross-Origin-Resource-Policy\": \"same-origin\"},
+        { \"X-Content-Type-Options\": \"nosniff\" },
+        { \"Cache-Control\": \"no-store\" },
+        { \"Referrer-Policy\": \"strict-origin-when-cross-origin\" }, 
+        { \"Content-Security-Policy\":\"default-src 'self' *.sap.com *.hana.ondemand.com;script-src 'self' *.sap.com *.hana.ondemand.com 'unsafe-eval';\"}
+      ]"
+    parameters:
+      buildpack: nodejs_buildpack
+      readiness-health-check-type: http
+      readiness-health-check-http-endpoint: /health
+    build-parameters:
+      builder: npm
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: ecommerce-cap-db
+      - name: ecommerce-cap-auth
+      - name: ecommerce-cap-connectivity
+      - name: ecommerce-cap-destination
+
+  - name: ecommerce-cap-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: ecommerce-cap-db
+      - name: ecommerce-cap-auth
+
+resources:
+  - name: ecommerce-cap-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: ecommerce-cap-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: ecommerce-cap-${org}-${space}
+        tenant-mode: dedicated
+  - name: ecommerce-cap-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
+  - name: ecommerce-cap-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite

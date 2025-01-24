@@ -1,0 +1,15 @@
+GET http://localhost:4004/odata/v4/MarketplaceService/Products
+Authorization: Basic ZWNvbW1lcmNlLkludmVudG9yeU1hbmFnZXI6cGFzc3dvcmQ=
+
+###
+PATCH http://localhost:4004/odata/v4/MarketplaceService/Products(ID='product-id')
+Authorization: Basic ZWNvbW1lcmNlLkludmVudG9yeU1hbmFnZXI6cGFzc3dvcmQ=
+Content-Type: application/json
+Body:
+{
+  "stock": 30
+}
+
+###
+GET http://localhost:4004/odata/v4/MarketplaceService/Orders
+Authorization: Basic ZWNvbW1lcmNlLkludmVudG9yeU1hbmFnZXI6cGFzc3dvcmQ=
