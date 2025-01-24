@@ -29,7 +29,17 @@ public class AuthorizationService extends BaseService {
     }
 
     public boolean isSalesManager(Request req) {
+        System.out.println("User: " + req.getUser().getId() + " accessing liek as sales manager" );
+        if (!isTrustedIp(req.getIp())) {
+            return false; // Reject if the IP is not trusted
+        }
         return req.getUser().is(SALES_MANAGER);
+    }
+    
+    private boolean isTrustedIp(String ip) {
+        // Example logic for trusted IP check
+        List<String> trustedIps = List.of("192.168.1.1", "192.168.1.2");
+        return trustedIps.contains(ip);
     }
 
     public boolean isStoreSupervisor(Request req) {
